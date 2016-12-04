@@ -1,0 +1,22 @@
+{
+  "name": "fsjs-td-07-twitter-interface",
+  "version": "1.0.0",
+  "description": "Twitter interface",
+  "main": "js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "fsjs-td-07-twitter-interface"
+  },
+  "keywords": [
+    "treehouse",
+    "twitter"
+  ],
+  "author": "May Miller-Ricci",
+  "license": "MIT",
+  "dependencies": {
+    "twitter-node-client": "0.0.6"
+  }
+}
