@@ -8,8 +8,15 @@ var success = function (data) {
 
 var Twitter = require('twitter-node-client').Twitter;
 
-var config = require("../data/twitter_config");
+var config = require('../data/twitter_config');
 
 var twitter = new Twitter(config);
 
-twitter.getUserTimeline({screen_name: "maymillerricci", count: 10}, error, success);
+// twitter.getUserTimeline({screen_name: 'maymillerricci', count: 10}, error, success);
+
+var express = require('express');
+
+var app = express();
+
+app.set('view engine', 'pug');
+app.set('views', __dirname + '/templates');
