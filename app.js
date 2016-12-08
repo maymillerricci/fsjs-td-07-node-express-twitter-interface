@@ -8,7 +8,7 @@ var success = function (data) {
 
 var Twitter = require('twitter-node-client').Twitter;
 
-var config = require('../data/twitter_config');
+var config = require('./twitter_config');
 
 var twitter = new Twitter(config);
 
@@ -20,7 +20,7 @@ var express = require('express');
 var app = express();
 
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, '/views'));
 
 app.get('/', function(req, res) {
   res.render("index");
