@@ -24,9 +24,16 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', function(req, res) {
+
   twitter.getUserTimeline({ screen_name: 'maymillerricci', count: 5 }, error, function(data) {
     var tweets = JSON.parse(data);
-    res.render('index', { tweets: tweets });
+
+    twitter.getCustomApiCall('/friends/list.json', { screen_name: 'maymillerricci', count: 5 }, error, function(data) {
+      var friends = JSON.parse(data).users;
+
+      res.render('index', { tweets: tweets, friends: friends });
+
+    });
   });
 });
 
