@@ -34,14 +34,19 @@ app.listen(3000, function() {
 
 
 function renderIndexWithTwitterData(screen_name, res) {
-  twitter.getUserTimeline({ screen_name: screen_name, count: 5 }, error, function(data) {
-    var tweets = JSON.parse(data);
+  
+  twitter.getUser({ screen_name: screen_name }, error, function(data) {
+    var user = JSON.parse(data);
 
-    twitter.getCustomApiCall('/friends/list.json', { screen_name: screen_name, count: 5 }, error, function(data) {
-      var friends = JSON.parse(data).users;
+    twitter.getUserTimeline({ screen_name: screen_name, count: 5 }, error, function(data) {
+      var tweets = JSON.parse(data);
 
-      res.render('index', { tweets: tweets, friends: friends });
+      twitter.getCustomApiCall('/friends/list.json', { screen_name: screen_name, count: 5 }, error, function(data) {
+        var friends = JSON.parse(data).users;
 
+        res.render('index', { user: user, tweets: tweets, friends: friends });
+
+      });
     });
   });
 }
