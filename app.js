@@ -12,6 +12,7 @@ var config = require('./twitter_config');
 
 var twitter = new Twitter(config);
 
+
 var path = require('path')
 
 var express = require('express');
@@ -24,19 +25,23 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', function(req, res) {
+  renderIndexWithTwitterData('maymillerricci', res);
+});
 
-  twitter.getUserTimeline({ screen_name: 'maymillerricci', count: 5 }, error, function(data) {
+app.listen(3000, function() {
+  console.log('The frontend server is running on port 3000.');
+})
+
+
+function renderIndexWithTwitterData(screen_name, res) {
+  twitter.getUserTimeline({ screen_name: screen_name, count: 5 }, error, function(data) {
     var tweets = JSON.parse(data);
 
-    twitter.getCustomApiCall('/friends/list.json', { screen_name: 'maymillerricci', count: 5 }, error, function(data) {
+    twitter.getCustomApiCall('/friends/list.json', { screen_name: screen_name, count: 5 }, error, function(data) {
       var friends = JSON.parse(data).users;
 
       res.render('index', { tweets: tweets, friends: friends });
 
     });
   });
-});
-
-app.listen(3000, function() {
-  console.log('The frontend server is running on port 3000.');
-})
+}
