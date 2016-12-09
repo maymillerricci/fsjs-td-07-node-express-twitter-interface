@@ -12,7 +12,6 @@ var config = require('./twitter_config');
 
 var twitter = new Twitter(config);
 
-// twitter.getUserTimeline({screen_name: 'maymillerricci', count: 10}, error, success);
 var path = require('path')
 
 var express = require('express');
@@ -25,7 +24,10 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', function(req, res) {
-  res.render("index");
+  twitter.getUserTimeline({ screen_name: 'maymillerricci', count: 5 }, error, function(data) {
+    var tweets = JSON.parse(data);
+    res.render('index', { tweets: tweets });
+  });
 });
 
 app.listen(3000, function() {
