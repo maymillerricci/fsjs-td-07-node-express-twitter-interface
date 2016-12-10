@@ -24,9 +24,15 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+// render index view, populated with twitter data, on '/' route
 app.get('/', function(req, res) {
   renderIndexWithTwitterData('maymillerricci', res);
 });
+
+// render error view if any other route is requested other than what's above
+app.get('*', function(req, res) {
+  res.render('error');
+})
 
 app.listen(3000, function() {
   console.log('The frontend server is running on port 3000.');
