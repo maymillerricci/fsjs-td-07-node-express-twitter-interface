@@ -102,4 +102,17 @@ html(lang='en')
                       else
                         a.button Follow
                         
-
+        div.grid-33
+          div.app--section
+            ul.app--message--list
+              li
+                h3 Conversation with 
+                  a #{messages[0].recipient.name == user.name ? messages[0].sender.name : messages[0].recipient.name}
+                ul.app--message--conversation
+                  each message in messages
+                    li(class=(message.sender.screen_name == user.screen_name ? 'app--message--me' : 'app--message'))
+                      div.app--avatar(style='background-image: url(' + message.sender.profile_image_url + ')')
+                        img(src=message.sender.profile_image_url)
+                      p.app--message--text #{message.text}
+                      p.app--message--timestamp #{new Date(message.created_at).toLocaleString()}
+                      

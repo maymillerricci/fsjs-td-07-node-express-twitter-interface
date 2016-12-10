@@ -44,9 +44,29 @@ function renderIndexWithTwitterData(screen_name, res) {
       twitter.getCustomApiCall('/friends/list.json', { screen_name: screen_name, count: 5 }, error, function(data) {
         var friends = JSON.parse(data).users;
 
-        res.render('index', { user: user, tweets: tweets, friends: friends });
+        twitter.getCustomApiCall('/direct_messages.json', { count: 3 }, error, function(data) {
+          var messages_to = JSON.parse(data);
 
+          twitter.getCustomApiCall('/direct_messages/sent.json', { count: 3 }, error, function(data) {
+            var messages_from = JSON.parse(data);
+
+            var messages = messages_to.concat(messages_from);
+            var sorted_messages = sortBy(messages, 'created_at');
+
+            res.render('index', { user: user, tweets: tweets, friends: friends, messages: sorted_messages });
+
+          });
+        });
       });
     });
+  });
+}
+
+function sortBy(array, key) {
+  return array.sort(function(a, b) {
+    var x = a[key];
+    var y = b[key];
+
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
   });
 }
