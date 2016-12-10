@@ -16,51 +16,51 @@ html(lang='en')
   body
     // I don't have a background image on my Twitter but I do have a theme with a background color
     header.circle--header(style='background: #' + user.profile_link_color)
-      div.bounds
-        div.circle--fluid
-          div.circle--fluid--cell
+      .bounds
+        .circle--fluid
+          .circle--fluid--cell
             a.logo
               svg(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', viewBox='0 0 180 146', xml:space='preserve')
                 path(d='M180,17.3c-6.6,2.9-13.7,4.9-21.2,5.8c7.6-4.6,13.5-11.8,16.2-20.4c-7.1,4.2-15,7.3-23.5,8.9C144.8,4.5,135.2,0,124.6,0c-20.4,0-36.9,16.5-36.9,36.9c0,2.9,0.3,5.7,1,8.4C58,43.7,30.8,29,12.5,6.7c-3.2,5.4-5,11.8-5,18.5C7.5,38.1,14.1,49.3,24,56c-6.1-0.2-11.7-1-16.7-4.6c0,0.2,0,0.3,0,0.5C7.2,69.7,20,84.6,36.9,88c-3.1,0.8-6.4,1.3-9.7,1.3c-2.4,0-4.7-0.2-6.9-0.7c4.7,14.6,18.3,25.3,34.5,25.6C42,124.1,26.1,130,8.8,130c-3,0-5.9-0.2-8.8-0.5C16.3,139.9,35.8,146,56.6,146c67.9,0,105.1-56.2,105.1-104.9c0-1.6,0-3.2-0.1-4.8C168.8,31.2,175,24.7,180,17.3z')
               h1 @#{user.screen_name}
-          div.circle--fluid--cell.align-right
+          .circle--fluid--cell.align-right
             nav
               ul.circle--inline
                 li
                   a Sign Out
     
-    div.app--tweet
+    .app--tweet
       form
-        div.circle--fluid
-          div.circle--fluid--cell.circle--fluid--primary.align-bottom.app--tweet--post
-            div.app--avatar(style='background-image: url(' + user.profile_image_url + ')')
+        .circle--fluid
+          .circle--fluid--cell.circle--fluid--primary.align-bottom.app--tweet--post
+            .app--avatar(style='background-image: url(' + user.profile_image_url + ')')
               img(src=user.profile_image_url)
             textarea.circle--textarea--input#tweet-textarea(placeholder="What's happening?")
             strong.app--tweet--char#tweet-char 140
-          div.circle--fluid--cell.align-bottom
+          .circle--fluid--cell.align-bottom
             button.button-primary Tweet
     
-    div.bounds.app--body
-      div.app--section--header
-        div.grid-33
-          div.app--section--heading
+    .bounds.app--body
+      .app--section--header
+        .grid-33
+          .app--section--heading
             h2 Timeline
-        div.grid-33
-          div.app--section--heading
+        .grid-33
+          .app--section--heading
             strong #{user.friends_count}
             h2 Following
-        div.grid-33
-          div.app--section--heading
+        .grid-33
+          .app--section--heading
             h2 Direct Messages
         
-        div.grid-33
-          div.app--section
+        .grid-33
+          .app--section
             ul.app--tweet--list
               each tweet in tweets
                 li
                   strong.app--tweet--timestamp #{new Date(tweet.created_at).toLocaleDateString()}
                   a.app--tweet--author
-                    div.app--avatar(style='background-image: url(' + tweet.user.profile_image_url + ')')
+                    .app--avatar(style='background-image: url(' + tweet.user.profile_image_url + ')')
                       img(src=tweet.user.profile_image_url)
                     h4 #{tweet.user.name} 
                     | @#{tweet.user.screen_name}
@@ -85,26 +85,26 @@ html(lang='en')
                           path.st0(d='M25.8,0c-3.6,0-6.8,2.1-8.3,5.1C16,2.1,12.9,0,9.2,0C4.1,0,0,4.1,0,9.2C0,21.4,17.3,28,17.3,28S35,21.3,35,9.2C35,4.1,30.9,0,25.8,0L25.8,0z')
                         strong #{tweet.favorite_count}
 
-        div.grid-33
-          div.app--section
+        .grid-33
+          .app--section
             ul.app--user--list
               each friend in friends
                 li
-                  div.circle--fluid
-                    div.circle--fluid--cell.circle--fluid--primary
+                  .circle--fluid
+                    .circle--fluid--cell.circle--fluid--primary
                       a.app--tweet--author
-                        div.app--avatar(style='background-image: url(' + friend.profile_image_url + ')')
+                        .app--avatar(style='background-image: url(' + friend.profile_image_url + ')')
                           img(src=friend.profile_image_url)
                         h4 #{friend.name}
                         p @#{friend.screen_name}
-                    div.circle--fluid--cell
+                    .circle--fluid--cell
                       if friend.following
                         a.button.button-text Unfollow
                       else
                         a.button Follow
                         
-        div.grid-33
-          div.app--section
+        .grid-33
+          .app--section
             ul.app--message--list
               li
                 h3 Conversation with 
@@ -112,7 +112,7 @@ html(lang='en')
                 ul.app--message--conversation
                   each message in messages
                     li(class=(message.sender.screen_name == user.screen_name ? 'app--message--me' : 'app--message'))
-                      div.app--avatar(style='background-image: url(' + message.sender.profile_image_url + ')')
+                      .app--avatar(style='background-image: url(' + message.sender.profile_image_url + ')')
                         img(src=message.sender.profile_image_url)
                       p.app--message--text #{message.text}
                       p.app--message--timestamp #{new Date(message.created_at).toLocaleString()}

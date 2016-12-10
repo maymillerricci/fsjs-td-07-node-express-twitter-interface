@@ -1,26 +1,20 @@
-// callback functions
-var error = function (err, response, body) {
-  console.log('ERROR [%s]', err);
-};
-var success = function (data) {
-  console.log('Data [%s]', data);
-};
-
-var Twitter = require('twitter-node-client').Twitter;
-
-var config = require('./twitter_config');
-
-var twitter = new Twitter(config);
-
+'use strict';
 
 var path = require('path')
 
-var express = require('express');
+// set up twitter node client
+var Twitter = require('twitter-node-client').Twitter;
+var config = require('./twitter_config');
+var twitter = new Twitter(config);
 
+// set up express
+var express = require('express');
 var app = express();
 
+// set up static middleware using 'public' path
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
+// use pug as view engine, with 'views' directory for templates
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -31,14 +25,17 @@ app.get('/', function(req, res) {
 
 // render error view if any other route is requested other than what's above
 app.get('*', function(req, res) {
+  res.status(404);
   res.render('error');
 })
 
+// set up frontend development server on port 3000
 app.listen(3000, function() {
   console.log('The frontend server is running on port 3000.');
 })
 
-
+// make requests to twitter api getting all the data that's needed for the index page
+// and render index view passing in all the twitter data
 function renderIndexWithTwitterData(screen_name, res) {
   
   twitter.getUser({ screen_name: screen_name }, error, function(data) {
@@ -68,6 +65,7 @@ function renderIndexWithTwitterData(screen_name, res) {
   });
 }
 
+// sort an array of objects by a key in the objects
 function sortBy(array, key) {
   return array.sort(function(a, b) {
     var x = a[key];
@@ -76,3 +74,8 @@ function sortBy(array, key) {
     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
   });
 }
+
+// error callback function
+var error = function (err, response, body) {
+  console.log(body);
+};
