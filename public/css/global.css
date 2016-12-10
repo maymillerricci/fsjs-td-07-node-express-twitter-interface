@@ -2108,8 +2108,7 @@ body {
 
 /* line 9, ../sass/global.sass */
 body {
-  padding-top: 128px;
-  overflow: hidden;
+  padding-top: 64px;
 }
 
 /* line 13, ../sass/global.sass */
@@ -2180,7 +2179,6 @@ body {
 }
 /* line 53, ../sass/global.sass */
 .app--section--header {
-  position: fixed;
   top: 65px;
   right: 0;
   left: 0;
