@@ -1,7 +1,5 @@
 'use strict';
 
-var path = require('path')
-
 // set up twitter node client
 var Twitter = require('twitter-node-client').Twitter;
 var config = require('./twitter_config');
@@ -11,12 +9,12 @@ var twitter = new Twitter(config);
 var express = require('express');
 var app = express();
 
-// set up static middleware using 'public' path
-app.use('/static', express.static(path.join(__dirname, 'public')));
+// set up static middleware at '/static' paths using 'public' directory
+app.use('/static', express.static(__dirname + '/public'));
 
 // use pug as view engine, with 'views' directory for templates
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', __dirname + '/views');
 
 // render index view, populated with twitter data, on '/' route
 app.get('/', function(req, res) {
