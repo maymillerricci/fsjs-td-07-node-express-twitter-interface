@@ -16,21 +16,41 @@ app.use('/static', express.static(__dirname + '/public'));
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
+// use body parser to be able to parse data from form for posting a new tweet
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 // render index view, populated with twitter data, on '/' route
 app.get('/', function(req, res) {
   renderIndexWithTwitterData('maymillerricci', res);
+});
+
+// post a new tweet: get text input from tweet form, post to api, get full tweet data back
+app.post('/tweet', function(req, res) {
+  var tweetText = req.body.tweetText;
+  twitter.postTweet({ status: tweetText }, error, function(data) {
+    var tweet = JSON.parse(data);
+    res.send(tweet);
+  });
+});
+
+// render markup from tweet partial using tweet data
+// used for ajax response to posting a tweet
+app.get('/views/_tweet', function(req, res) {
+  var tweet = req.query.tweet
+  res.render('_tweet', { tweet: tweet });
 });
 
 // render error view if any other route is requested other than what's above
 app.get('*', function(req, res) {
   res.status(404);
   res.render('error');
-})
+});
 
 // set up frontend development server on port 3000
 app.listen(3000, function() {
   console.log('The frontend server is running on port 3000.');
-})
+});
 
 // make requests to twitter api getting all the data that's needed for the index page
 // and render index view passing in all the twitter data
@@ -76,4 +96,4 @@ function sortBy(array, key) {
 // error callback function
 var error = function (err, response, body) {
   console.log(body);
-};
+}
