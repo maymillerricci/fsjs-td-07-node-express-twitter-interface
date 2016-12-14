@@ -1,31 +1,31 @@
 'use strict';
 
-// set up twitter node client
+/** set up twitter node client */
 var Twitter = require('twitter-node-client').Twitter;
 var config = require('./twitter_config');
 var twitter = new Twitter(config);
 
-// set up express
+/** set up express */
 var express = require('express');
 var app = express();
 
-// set up static middleware at '/static' paths using 'public' directory
+/** set up static middleware at '/static' paths using 'public' directory */
 app.use('/static', express.static(__dirname + '/public'));
 
-// use pug as view engine, with 'views' directory for templates
+/** use pug as view engine, with 'views' directory for templates */
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
-// use body parser to be able to parse data from form for posting a new tweet
+/** use body parser to be able to parse data from form for posting a new tweet */
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// render index view, populated with twitter data, on '/' route
+/** render index view, populated with twitter data, on '/' route */
 app.get('/', function(req, res) {
   renderIndexWithTwitterData('maymillerricci', res);
 });
 
-// post a new tweet: get text input from tweet form, post to api, get full tweet data back
+/** post a new tweet: get text input from tweet form, post to api, get full tweet data back */
 app.post('/tweet', function(req, res) {
   var tweetText = req.body.tweetText;
   twitter.postTweet({ status: tweetText }, error, function(data) {
@@ -34,11 +34,15 @@ app.post('/tweet', function(req, res) {
   });
 });
 
-// render markup from tweet partial using tweet data
-// used for ajax response to posting a tweet
+/** 
+ * render markup from tweet partial using tweet data
+ * used for ajax response to posting a tweet
+ */
 app.get('/views/_tweet', function(req, res) {
-  // only render tweet partial markup if it's an ajax request
-  // so going directly to /views/_tweet -> error page
+  /** 
+   * only render tweet partial markup if it's an ajax request
+   * so going directly to /views/_tweet -> error page
+   */
   if (req.xhr) {
     var tweet = req.query.tweet;
     res.render('_tweet', { tweet: tweet });
@@ -47,18 +51,20 @@ app.get('/views/_tweet', function(req, res) {
   }
 });
 
-// render error view if any other route is requested other than what's above
+/** render error view if any other route is requested other than what's above */
 app.get('*', function(req, res) {
   renderError(res);
 });
 
-// set up frontend development server on port 3000
+/** set up frontend development server on port 3000 */
 app.listen(3000, function() {
   console.log('The frontend server is running on port 3000.');
 });
 
-// make requests to twitter api getting all the data that's needed for the index page
-// and render index view passing in all the twitter data
+/**
+ * make requests to twitter api getting all the data that's needed for the index page
+ * and render index view passing in all the twitter data
+ */
 function renderIndexWithTwitterData(screenName, res) {
   
   twitter.getUser({ screen_name: screenName }, error, function(data) {
@@ -88,13 +94,13 @@ function renderIndexWithTwitterData(screenName, res) {
   });
 }
 
-// render error view with page not found response code
+/** render error view with page not found response code */
 function renderError(res) {
   res.status(404);
   res.render('error');
 }
 
-// sort an array of objects by a key in the objects
+/** sort an array of objects by a key in the objects */
 function sortBy(array, key) {
   return array.sort(function(a, b) {
     var x = a[key];
@@ -104,7 +110,7 @@ function sortBy(array, key) {
   });
 }
 
-// error callback function
+/** error callback function */
 var error = function (err, response, body) {
   console.log(body);
 };
