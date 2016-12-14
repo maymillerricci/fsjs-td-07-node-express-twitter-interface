@@ -5,8 +5,9 @@ $('.app--tweet form').on('submit', function(e) {
   e.preventDefault();
   var tweetText = $('#tweet-textarea').val();
   postTweet(tweetText);
-  // clear input field
+  // clear input field & reset character count to 140
   $('#tweet-textarea').val('');
+  $('#tweet-char').text(140);
 });
 
 /** send tweet text to /tweet post route to then make api call to post tweet and return tweet data */
