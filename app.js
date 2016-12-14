@@ -2,7 +2,8 @@
 
 /** set up twitter node client */
 var Twitter = require('twitter-node-client').Twitter;
-var config = require('./twitter_config');
+/** fill in twitter api authentication info in twitter_config file following format in twitter_config_sample */
+var config = require('./twitter_config.json');
 var twitter = new Twitter(config);
 
 /** set up express */
