@@ -2,8 +2,7 @@ extends layout
 
 block content
 
-  // I don't have a background image on my Twitter but I do have a theme with a background color
-  header.circle--header(style='background: #' + user.profile_link_color)
+  header.circle--header(style='background-image: url(' + user.profile_banner_url + ')')
     .bounds
       .circle--fluid
         .circle--fluid--cell

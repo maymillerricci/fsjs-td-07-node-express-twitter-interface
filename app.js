@@ -107,4 +107,4 @@ function sortBy(array, key) {
 // error callback function
 var error = function (err, response, body) {
   console.log(body);
-}
+};
