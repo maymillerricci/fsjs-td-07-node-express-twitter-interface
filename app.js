@@ -5,6 +5,7 @@ var Twitter = require('twitter-node-client').Twitter;
 /** fill in twitter api authentication info in twitter_config file following format in twitter_config_sample */
 var config = require('./twitter_config.json');
 var twitter = new Twitter(config);
+var screenName = 'maymillerricci';
 
 /** set up express */
 var express = require('express');
@@ -23,7 +24,7 @@ app.use(bodyParser.json());
 
 /** render index view, populated with twitter data, on '/' route */
 app.get('/', function(req, res) {
-  renderIndexWithTwitterData('maymillerricci', res);
+  renderIndexWithTwitterData(screenName, res);
 });
 
 /** post a new tweet: get text input from tweet form, post to api, get full tweet data back */
