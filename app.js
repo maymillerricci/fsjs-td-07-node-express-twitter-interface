@@ -37,14 +37,19 @@ app.post('/tweet', function(req, res) {
 // render markup from tweet partial using tweet data
 // used for ajax response to posting a tweet
 app.get('/views/_tweet', function(req, res) {
-  var tweet = req.query.tweet
-  res.render('_tweet', { tweet: tweet });
+  // only render tweet partial markup if it's an ajax request
+  // so going directly to /views/_tweet -> error page
+  if (req.xhr) {
+    var tweet = req.query.tweet;
+    res.render('_tweet', { tweet: tweet });
+  } else {
+    renderError(res);
+  }
 });
 
 // render error view if any other route is requested other than what's above
 app.get('*', function(req, res) {
-  res.status(404);
-  res.render('error');
+  renderError(res);
 });
 
 // set up frontend development server on port 3000
@@ -81,6 +86,12 @@ function renderIndexWithTwitterData(screenName, res) {
       });
     });
   });
+}
+
+// render error view with page not found response code
+function renderError(res) {
+  res.status(404);
+  res.render('error');
 }
 
 // sort an array of objects by a key in the objects
