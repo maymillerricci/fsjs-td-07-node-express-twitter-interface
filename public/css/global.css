@@ -2502,3 +2502,7 @@ input[type="button"] {
 .error {
   margin-left: 50px;
 }
+
+.over-char-limit {
+  color: red;
+}
